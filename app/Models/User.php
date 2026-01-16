@@ -51,4 +51,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Empresa::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdminGlobal(): bool
+    {
+        return $this->roles()->where('is_admin_global', true)->exists();
+    }
+
+    public function hasPermissao(string $permissao): bool
+    {
+        if ($this->isAdminGlobal()) {
+            return true;
+        }
+
+        return $this->roles()
+            ->whereHas('permissoes', function ($q) use ($permissao) {
+                $q->where('nome', $permissao);
+            })
+            ->exists();
+    }
+
 }

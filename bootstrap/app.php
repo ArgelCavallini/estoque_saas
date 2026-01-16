@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(TenantMiddleware::class);
+        $middleware->alias([
+            'permissao' => \App\Http\Middleware\CheckPermissao::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
