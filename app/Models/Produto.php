@@ -15,4 +15,17 @@ class Produto extends Model
         'estoque_minimo',
         'ativo',
     ];
+
+    public function saldoAtual()
+    {
+        return $this->movimentacoes()
+            ->join('tipos_movimentacao', 'tipos_movimentacao.id', '=', 'estoque_movimentacoes.tipo_id')
+            ->selectRaw('SUM(quantidade * fator) as saldo')
+            ->value('saldo') ?? 0;
+    }
+
+    public function movimentacoes()
+    {
+        return $this->hasMany(EstoqueMovimentacao::class);
+    }
 }
