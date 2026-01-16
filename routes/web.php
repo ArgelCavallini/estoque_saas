@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\EstoqueMovimentacaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,19 +18,30 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // PRODUTO
     Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');
     Route::get('/produtos/novo', [ProdutoController::class, 'create'])->name('produtos.create');
     Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
-
-    //ROTAS DE EDIÇÃO
     Route::get('/produtos/{produto}/editar', [ProdutoController::class, 'edit'])
         ->name('produtos.edit');
-
     Route::put('/produtos/{produto}', [ProdutoController::class, 'update'])
         ->name('produtos.update');
-
     Route::delete('/produtos/{produto}', [ProdutoController::class, 'destroy'])
     ->name('produtos.destroy');
+
+    // ESTOQUE
+    Route::get('/estoque', [EstoqueMovimentacaoController::class, 'index'])
+        ->name('estoque.index');
+    Route::get('/estoque/movimentar', [EstoqueMovimentacaoController::class, 'create'])
+        ->name('estoque.create');
+    Route::post('/estoque/movimentar', [EstoqueMovimentacaoController::class, 'store'])
+        ->name('estoque.store');
+    Route::get('/estoque/{movimentacao}/editar', [EstoqueMovimentacaoController::class, 'edit'])
+        ->name('estoque.edit');
+    Route::put('/estoque/{movimentacao}', [EstoqueMovimentacaoController::class, 'update'])
+        ->name('estoque.update');
+    Route::delete('/estoque/{movimentacao}', [EstoqueMovimentacaoController::class, 'destroy'])
+        ->name('estoque.destroy');
 });
 
 Route::get('/teste-empresa', function () {

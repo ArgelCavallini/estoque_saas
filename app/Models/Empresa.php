@@ -11,4 +11,14 @@ class Empresa extends Model
         'cnpj',
         'ativo',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function produtos()
+    {
+        return $this->hasMany(Produto::class);
+    }
 }
