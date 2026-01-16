@@ -37,6 +37,7 @@
         <tr style="background-color:#f3f4f6;">
             <th style="border:1px solid #e5e7eb; text-align:left;">Nome</th>
             <th style="border:1px solid #e5e7eb; text-align:right;">Estoque mínimo</th>
+            <th style="border:1px solid #e5e7eb; text-align:right;">Saldo</th>
             <th style="border:1px solid #e5e7eb; text-align:center;">Ativo</th>
             <th style="border:1px solid #e5e7eb; text-align:center;">Ações</th>
         </tr>
@@ -44,13 +45,20 @@
 
     <tbody>
         @foreach ($produtos as $index => $produto)
-            <tr style="background-color: {{ $index % 2 === 0 ? '#ffffff' : '#f9fafb' }};">
+            <tr  style="
+        background-color:
+        {{ $produto->saldoAtual() <= $produto->estoque_minimo ? '#fee2e2' : ($index % 2 === 0 ? '#ffffff' : '#f9fafb') }};
+    ">
                 <td style="border:1px solid #e5e7eb;">
                     {{ $produto->nome }}
                 </td>
 
                 <td style="border:1px solid #e5e7eb; text-align:right;">
                     {{ $produto->estoque_minimo }}
+                </td>
+
+                <td style="border:1px solid #e5e7eb; text-align:right;">
+                    {{ $produto->saldoAtual() }}
                 </td>
 
                 <td style="border:1px solid #e5e7eb; text-align:center;">
